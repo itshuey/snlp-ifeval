@@ -25,8 +25,8 @@ from absl import app
 from absl import flags
 from absl import logging
 
-from instruction_following_eval import instructions_registry
-
+import instructions_registry
+import nltk
 
 _INPUT_DATA = flags.DEFINE_string(
     "input_data", None, "path to input data", required=True
@@ -247,6 +247,9 @@ def main(argv):
   inputs = read_prompt_list(_INPUT_DATA.value)
   prompt_to_response = read_prompt_to_response_dict(
       _INPUT_RESPONSE_DATA.value)
+  
+  # download necessary package (necessary for first-time use)
+  # nltk.download('punkt')
 
   # get instruction following results
   for func, output_file_name in [
